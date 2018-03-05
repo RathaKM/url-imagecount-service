@@ -58,7 +58,7 @@ This repo contains working code for a __Url Image Count service (SpringBoot with
 - For a quick deployment you can use the shared [imagecount-service-0.1.0.jar](../master/imagecount-service-0.1.0.jar) file, in case you didn't have time or ran into any issues.
    - Simply go to the root folder and run the command '_java -jar build/libs/imagecount-service-0.1.0.jar_'
 
-## How to Consume Resources
+## How to Consume/Test the Resources
 
 There are 2 ways you can consume these resources. They are by using Postman, and Curl command. 
 
@@ -167,11 +167,7 @@ Please make sure that the Application is running before running this command.
   }
   ```
 
-## How to Run Tests
-
-There are some unit tests added into this repo
-
-### Unit Tests
+## Unit Tests
 
 The unit tests are added mainly for Controller, and Service layers. These tests will be run as part of the '_gradle build_' command
  
