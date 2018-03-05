@@ -1,0 +1,10 @@
+{
+  "imageCountUrls": [
+    {
+      "url":"http://localhost:8080/v1/url1/image"
+    },
+    {
+      "url":"http://localhost:8080/v1/url2/image"
+    }
+  ]
+}
