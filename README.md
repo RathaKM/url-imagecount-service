@@ -7,6 +7,8 @@ This repo contains working code for a __Url Image Count service (SpringBoot with
 - The application also provides another REST API (__v1/imagecount/jobId/10__) with a Job ID as input parameter. This API will return a JSON response with the number of images found in the contents of each URL supplied for that job id.
    - The total image count for each url will be displayed if that particular url request is completed
    - Otherwise the status 'Pending' will be displayed
+- For the purpose of demonstration this application also contains REST API for returning the Url contents. The contents available thro' '_/v1/url1/image, /v1/url2/image and /v1/url3/image_'   
+   
 
 ## Project Features
 
@@ -49,14 +51,16 @@ This repo contains working code for a __Url Image Count service (SpringBoot with
 ### Service Setup
 
 - Clone/fork this Repo and open/import this Project into IntelliJ or Eclipse
-- Go to the project directory, '_url-imagecount-service_'
+- Open a Terminal window and go to the project directory, '_url-imagecount-service_'
 - Build/Package the project using '_gradle build_' command
 - Start SpringBoot application using '_java -jar build/libs/imagecount-service-0.1.0.jar_' command
-- Test the server by http://localhost:8080/v1/imagecount/jobId/1. This may display _{"errorMessage":"JobId 1 is not found"}_, if you have not created any Job already. 
+- Test the server by http://localhost:8080/v1/imagecount/jobId/1. This may display _{"errorMessage":"JobId 1 is not found"}_, as you have not created any Job already. 
+- For a quick deployment you can use the shared [imagecount-service-0.1.0.jar](../master/imagecount-service-0.1.0.jar) file, in case you didn't have time or ran into any issues.
+   - Simply go to the root folder and run the command '_java -jar build/libs/imagecount-service-0.1.0.jar_'
 
 ## How to Consume Resources
 
-There are 2 ways you can consume these resources. They are using Postman, and Curl command. 
+There are 2 ways you can consume these resources. They are by using Postman, and Curl command. 
 
 ### Using Postman
 
