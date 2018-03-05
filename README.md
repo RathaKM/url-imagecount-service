@@ -38,11 +38,11 @@ This repo contains working code for a __Url Image Count service (SpringBoot with
 
 | Resource Type                         | Resource URI                                          |    HTTP Method |
 | --------------------------------------|------------------------------------------------------ |----------------|
-| Create Reminder                       | /reminder-service/v1/reminders                        | POST           |
-| Update Reminder                       | /reminder-service/v1/reminders/id                     | PUT            |
-| Get A Reminder                        | /reminder-service/v1/reminders/id                     | GET            |
-| Get Reminders By DueDate and/or Status| /reminder-service/v1/reminders?dueDate=""&status=""   | GET            |
-| Delete A Reminder                     | /reminder-service/v1/reminders/id                     | DELETE         |   
+| Create a Job                          | /v1/imagecount                                        | POST           |
+| Get a Job Detail                      | /v1/imagecount/jobId/1                                | GET            |
+| Get Url1 content                      | /v1/url1/image                                        | GET            |
+| Get Url2 content                      | /v1/url2/image                                        | GET            |
+| Get Url3 content                      | /v1/url3/image                                        | GET            |   
 
 ## Project Setup
 
