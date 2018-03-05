@@ -134,8 +134,7 @@ Please make sure that the Application is running before running this command.
 - Command:
 ```curl -H "Content-Type:application/json" -X GET http://localhost:8080/v1/imagecount/jobId/1 ```
 - Response
-  ```
-  {
+  ```{
   "jobId": "1",
   "imageCountUrls": [
     {
@@ -157,9 +156,7 @@ Please make sure that the Application is running before running this command.
     "delete": {
       "href": "http://localhost:8080/v1/imagecount/jobId/1"
     }
-  }
-}
-```
+  }```
 
 ## How to Run Tests
 
