@@ -2,14 +2,26 @@
 
 This repo contains working code for a __Url Image Count service (SpringBoot with Java8)__. 
 
-- This application provides a REST API (__v1/imagecount__) that will accept a list of URLs as JSON input. This call would return a Job Id immediately after invoked.
-- The application’s back-end would then get the contents for each URL and count the total number of images found in that content by parsing for all the image tags.This would be done asynchronously.
-- The application also provides another REST API (__v1/imagecount/jobId/10__) with a Job ID as input parameter. This API will return a JSON response with the number of images found in the contents of each URL supplied for that job id.
-   - The total image count for each url will be displayed if that particular url request is completed
+There are two different implementations provided in this application.
+### Implementation I for Live Urls
+- In this implementation the application provides a REST API (__/v1/imagecount__) that will accept a list of live URLs as JSON input. This call would return a Job Id immediately after invoked.
+- The application’s back-end would then get the html contents for each URL, parse for _<img src='' >_ tag using regular expression and then count the total number of images found in that content by parsing for all the image tags.This would be done asynchronously. 
+- The application also provides another REST API (__v1/imagecount/jobId/{jobId}__) with a Job ID as path parameter. This API will return a JSON response with the number of images found in the contents of each URL supplied for that job id.
+   - The total image count for each url content will be displayed if that particular url request is completed
    - Otherwise the status 'Pending' will be displayed
-- For the purpose of demonstration this application also contains REST API for returning the Url contents. The contents available thro' '_/v1/url1/image, /v1/url2/image and /v1/url3/image_'   
-   
+- The urls in the request payload could be any live urls.
+- This implementation uses _Executor_ interface for multithreading and _CompletableFuture_ for asynchronous programming for processing the urls, parsing and counting the images.
 
+### Implementation II for Demo Urls
+- This implementation provides the REST endpoint (__/v1/imagecount/demourl__) that will accept a list of demo urls as JSON input. This call would also return a Job Id immediately after invoked.
+- For the purpose of demonstration this application also contains REST API for providing the demo Url contents. The contents available thro' the uri's '_/v1/url1/image, /v1/url2/image and /v1/url3/image_'. The response of these urls are not html contents. They are JSON response with <image> tags.   
+- The same REST endpoint (__v1/imagecount/jobId/{jobId}__) with a Job ID as path parameter can be used to retrieve the job details. 
+   - This will also return a JSON response with the number of images found in the contents of each URL supplied for that job id.
+   - The total image count for each url content will be displayed if that particular url request is completed
+   - Otherwise the status 'Pending' will be displayed
+- The urls in the request payload could be any of the three demo (url1, url2, url3) urls.
+- This one uses _@Async_ of Spring for url processing and the image count.
+   
 ## Project Features
 
 - Multithreaded & Asynchronous Spring Boot and Java 8 based REST implementation
