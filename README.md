@@ -3,16 +3,17 @@
 This repo contains working code for a __Url Image Count service (SpringBoot with Java8)__. 
 
 There are two different implementations provided in this application.
-### Implementation I for Live Urls
+### Implementation I (for Live Urls)
 - In this implementation the application provides a REST API (__/v1/imagecount__) that will accept a list of live URLs as JSON input. This call would return a Job Id immediately after invoked.
-- The application’s back-end would then get the html contents for each URL, parse for _<img src='' >_ tag using regular expression and then count the total number of images found in that content by parsing for all the image tags.This would be done asynchronously. 
-- The application also provides another REST API (__v1/imagecount/jobId/{jobId}__) with a Job ID as path parameter. This API will return a JSON response with the number of images found in the contents of each URL supplied for that job id.
+- The application’s back-end would then get the html contents for each URL and then count the total number of images found in that content by parsing the _&lt;img src="" >_ tag using regular expression. This would be done asynchronously. 
+- The application also provides another REST API (__v1/imagecount/jobId/{jobId}__) with a Job ID as path parameter. 
+   - This API will return a JSON response with the number of images found in the contents of each URL supplied for that job id.
    - The total image count for each url content will be displayed if that particular url request is completed
    - Otherwise the status 'Pending' will be displayed
 - The urls in the request payload could be any live urls.
 - This implementation uses _Executor_ interface for multithreading and _CompletableFuture_ for asynchronous programming for processing the urls, parsing and counting the images.
 
-### Implementation II for Demo Urls
+### Implementation II (for Demo Urls)
 - This implementation provides the REST endpoint (__/v1/imagecount/demourl__) that will accept a list of demo urls as JSON input. This call would also return a Job Id immediately after invoked.
 - For the purpose of demonstration this application also contains REST API for providing the demo Url contents. The contents available thro' the uri's '_/v1/url1/image, /v1/url2/image and /v1/url3/image_'. The response of these urls are not html contents. They are JSON response with <image> tags.   
 - The same REST endpoint (__v1/imagecount/jobId/{jobId}__) with a Job ID as path parameter can be used to retrieve the job details. 
@@ -48,12 +49,13 @@ There are two different implementations provided in this application.
 ![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/url-imagecount-service.png)
 
 
-## Reminder Service Resources
+## UrlImageCount Service Resources
 
 | Resource Type                         | Resource URI                                          |    HTTP Method |
 | --------------------------------------|------------------------------------------------------ |----------------|
-| Create a Job                          | /v1/imagecount                                        | POST           |
-| Get a Job Detail                      | /v1/imagecount/jobId/1                                | GET            |
+| Create a Job (for Live Urls)          | /v1/imagecount                                        | POST           |
+| Create a Job (for Demo Urls)          | /v1/imagecount/demourl                                | POST           |
+| Get a Job Detail                      | /v1/imagecount/jobId/{jobId}                          | GET            |
 | Get Url1 content                      | /v1/url1/image                                        | GET            |
 | Get Url2 content                      | /v1/url2/image                                        | GET            |
 | Get Url3 content                      | /v1/url3/image                                        | GET            |   
@@ -64,7 +66,7 @@ There are two different implementations provided in this application.
 
 - Clone/fork this Repo and open/import this Project into IntelliJ or Eclipse
 - Open a Terminal window and go to the project directory, '_url-imagecount-service_'
-- Build/Package the project using '_gradle build_' command
+- Build/Package the project using '_gradle build_' command (use _gradle build -x test_ to skip the test)
 - Start SpringBoot application using '_java -jar build/libs/imagecount-service-0.1.0.jar_' command
 - Test the server by http://localhost:8080/v1/imagecount/jobId/1. This may display _{"errorMessage":"JobId 1 is not found"}_, as you have not created any Job already. 
 - For a quick deployment you can use the shared [imagecount-service-0.1.0.jar](../master/imagecount-service-0.1.0.jar) file, in case you didn't have time or ran into any issues.
@@ -79,23 +81,35 @@ There are 2 ways you can consume these resources. They are by using Postman, and
 The resources can be consumed by using below Postman collection
 - https://www.getpostman.com/collections/856315de6d32166e268f
 
-#### Create A Job for Url Image Count processing
-![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/post-imagecount.png)
+#### For Live Urls
+##### Create A Job for Live Url Image Count processing
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/post-liveurl-imagecounts.png)
 
+##### Retrive A Job Detail which is Pending for some Live Url
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-liveurl-imagecount-pending.png)
 
-#### Retrive A Job Detail which is Pending for some Url
-![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-imagecount-pending.png)
+##### Retrive A Job Detail which is fully completed for Live Url
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-liveurl-imagecount-completed.png)
 
-#### Retrive A Job Detail which is fully completed
-![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-imagecount-completed.png)
+#### For Demo Urls
+##### Create A Job for Demo Url Image Count processing
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/post-demourl-imagecount.png)
 
-#### Retrieve Url1 content
+##### Retrive A Job Detail which is Pending for some Demo Url
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-demourl-imagecount-pending.png)
+
+##### Retrive A Job Detail which is fully completed for Demo Url
+![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/get-demourl-imagecount-completed.png)
+
+#### Demo Service Urls
+
+##### Retrieve Url1 content
 ![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/url1-response.png)
 
-#### Retrieve Url2 content
+##### Retrieve Url2 content
 ![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/url2-response.png)
 
-#### Retrieve Url3 content
+##### Retrieve Url3 content
 ![alt txt](https://github.com/RathaKM/url-imagecount-service/blob/master/src/main/resources/images/url3-response.png)
 
 ### Validation
@@ -109,14 +123,14 @@ If the JobId is not available then an error message will be displayed
 ```
 
 ### Using Curl command
-We can test the resources using below Curl command. The data files are available in the root folder [_requestX.json_]
+We can test the resources using below Curl command. The data files are available in the root folder [_liveurl_requestX.json or demourl_requestX.json_]
 
 Please make sure that the Application is running before running this command.
 
 #### Create a Job (HTTP POST call)
-- Command: You can try with different data file (request2.json, request3.json)
+- Command: You can try with different data file (demourl_request2.json, demourl_request3.json)
   ```
-  curl -H "Content-Type:application/json" -X POST -d @request1.json http://localhost:8080/v1/imagecount
+  curl -H "Content-Type:application/json" -X POST -d @demourl_request1.json http://localhost:8080/v1/imagecount/demourl
   ```
 - response
   ```
