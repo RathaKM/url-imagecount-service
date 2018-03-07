@@ -23,9 +23,6 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UrlImageCountServiceTest {
-
-//    @InjectMocks
-//    private UrlImageCountService urlImageCountService;
     @Mock
     private RestTemplate restTemplate;
     @Mock

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -22,7 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("v1/imagecount")
+@RequestMapping("/v1/imagecount")
 public class UrlImageCountController {
 
     //to generate the unique jobId
@@ -70,7 +71,7 @@ public class UrlImageCountController {
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/demourl", method = RequestMethod.POST)
     public @ResponseBody CompletableFuture<UrlImageCount> countUrlImage(@RequestBody UrlImageCount input) throws InterruptedException, ExecutionException {
         String newJobId = String.valueOf(jobId.incrementAndGet());
         logger.info("input: {}", input);
@@ -91,6 +92,30 @@ public class UrlImageCountController {
         htUrlImgCount = imageCountService.processUrls(input, immediateResp);
         jobDetails.put(newJobId, htUrlImgCount);
 
+        return immediateResp;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public @ResponseBody CompletableFuture<UrlImageCount> createJob(@RequestBody UrlImageCount input) throws InterruptedException, ExecutionException, IOException {
+        String newJobId = String.valueOf(jobId.incrementAndGet());
+        logger.info("input: {}", input);
+        Hashtable htUrlImgCount = new Hashtable();
+
+        input.setJobId(newJobId);
+        input.getImageCountUrls().stream().forEach(url->url.setImageCount("Pending"));
+        //set Hateos link
+        addHateosLinksForPost(input, newJobId);
+
+        //prepare for the immediate response with JobId
+        CompletableFuture<UrlImageCount> immediateResp = new CompletableFuture<UrlImageCount>();
+
+        //send the immediate response with the JobId
+        immediateResp.complete(input);
+
+        //continue the process of counting the image in each url
+        htUrlImgCount = imageCountService.processUrlsAndCountImage(input, immediateResp);
+        jobDetails.put(newJobId, htUrlImgCount);
+        logger.info("jobDetails: {}", jobDetails.toString());
         return immediateResp;
     }
 
