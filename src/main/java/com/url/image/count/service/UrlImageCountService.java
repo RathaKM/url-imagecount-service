@@ -32,7 +32,7 @@ public class UrlImageCountService {
 
     private static final Logger logger = LoggerFactory.getLogger(UrlImageCountService.class);
     private RestTemplate restTemplate;
-    private static final String HTML_IMG_TAG_PATTERN = "(?i)<img([^>]+)>(.+?)";
+    private static final String HTML_IMG_TAG_PATTERN = "(?i)<img([^>]*)([/]?>)";
     private Pattern patternTag;
     private Matcher matcherTag;
 
